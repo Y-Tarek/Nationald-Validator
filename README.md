@@ -1,5 +1,9 @@
 # National ID Extractor
-API to Validate and extract required Info from a country national id for now only EGYPTIAN NationalID validation exists.
+API for Validating and Extracting Information from National IDs,
+
+Currently, the API supports validation and extraction of information only for Egyptian National IDs.
+
+This version is more concise and professional, clearly stating the functionality of the API and its current scope.
 
 ## Features 
     - Flexible Extraction: Supports multiple extraction strategies, allowing the system to process various types of 
