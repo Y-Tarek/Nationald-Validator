@@ -1,5 +1,4 @@
-from sre_constants import SUCCESS
-from app.constants import FAILED
+from app.constants import FAILED, SUCCESSFUL
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -53,7 +52,7 @@ class NationalIDAPI(APIView):
         try:
             parser = NationalIDParserFactory.get_parser(country_code)
             parsed_data = parser.parse(national_id)
-            return parsed_data, status.HTTP_200_OK, SUCCESS
+            return parsed_data, status.HTTP_200_OK, SUCCESSFUL
         except ValueError as e:
             return {"error": str(e)}, status.HTTP_400_BAD_REQUEST, FAILED
 
