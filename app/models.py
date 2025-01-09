@@ -2,6 +2,10 @@ from django.db import models
 from timestampedmodel import TimestampedModel
 from .utility import generate_key_pair 
 from django.utils.timezone import now
+from app.constants import (
+    SUCCESSFUL,
+    STATUS_CHOICES
+)
 
 class Service(TimestampedModel):
     """ Model for storing API Keys for service to service Authentication. """
@@ -28,7 +32,13 @@ class Service(TimestampedModel):
             self.public_key, self.private_key = generate_key_pair()
         super().save(*args, **kwargs)
 
-class CountryCode(models.Model):
-    """ This Model will hold Country codes for identity. """
-    code = models.CharField(max_length=20)
-    is_active = models.BooleanField(default=True)
+class Transaction(TimestampedModel):
+    """ This Model will hold service transactions. """
+    service = models.ForeignKey(
+        Service,
+        on_delete= models.CASCADE,
+        related_name="service_transactions"
+    )
+    transaction_id = models.CharField(max_length=255, unique=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True) 
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=SUCCESSFUL)

@@ -1,0 +1,7 @@
+SUCCESSFUL = "Successful"
+FAILED = "Failed"
+
+STATUS_CHOICES = (
+    (SUCCESSFUL,SUCCESSFUL),
+    (FAILED,FAILED),
+)
