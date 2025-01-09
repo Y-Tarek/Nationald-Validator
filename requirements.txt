@@ -4,3 +4,4 @@ django-cors-headers
 django-filter
 django-timestampedmodel
 cryptography
+django-ratelimit

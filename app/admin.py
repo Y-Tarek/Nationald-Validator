@@ -1,6 +1,9 @@
 from django.contrib import admin
 from app.models import *
 
-admin.site.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    readonly_fields = ['public_key','private_key']
+
+admin.site.register(Service,ServiceAdmin)
 
 # Register your models here.

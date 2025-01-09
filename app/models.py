@@ -6,8 +6,8 @@ from django.utils.timezone import now
 class Service(TimestampedModel):
     """ Model for storing API Keys for service to service Authentication. """
 
-    public_key = models.TextField(unique=True)
-    private_key = models.TextField()
+    public_key = models.TextField(unique=True, blank=True)
+    private_key = models.TextField(blank=True)
     service_name = models.CharField(max_length=255)
     expires_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
@@ -25,7 +25,7 @@ class Service(TimestampedModel):
     
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.public_key, self.private_key = self.generate_key_pair()
+            self.public_key, self.private_key = generate_key_pair()
         super().save(*args, **kwargs)
 
 class CountryCode(models.Model):
