@@ -17,7 +17,8 @@ class EgyptianIDParser(NationalIDParser):
         "88": "Abroad"
     }
 
-    def parse(self, national_id: str):
+    def parse(self, national_id):
+        national_id = str(national_id)
         if len(national_id) != 14 or not national_id.isdigit():
             raise ValueError("Invalid Egyptian National ID. Must be a 14-digit number.")
 
@@ -36,6 +37,7 @@ class EgyptianIDParser(NationalIDParser):
 
         return {
             "birth_date": birth_date,
+            "governorate_code":national_id[7:9],
             "governorate": governorate,
             "gender": gender,
         }

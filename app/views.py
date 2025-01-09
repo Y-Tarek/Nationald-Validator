@@ -1,45 +1,10 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
-
 from shared.parser import NationalIDParserFactory
-from .models import Service, CountryCode
-from .utility import generate_key_pair 
 from rest_framework.permissions import IsAuthenticated
-from .serializer import CountryCodeSerializer, NationalIDSerializer
+from .serializer import NationalIDSerializer
 from rest_framework import status
-
-
-class RegisterServiceAPI(APIView):
-    """API for creating Srvice Key Pair for a tenant."""
-    
-    def post(self, request):
-        service_name = request.data.get('service_name')
-        expires_at = request.data.get('expires_at', None)
-
-        if not service_name:
-            return Response({"error": "Service name is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        public_key, private_key = generate_key_pair()
-
-        api_key = Service.objects.create(
-            public_key=public_key,
-            private_key=private_key,
-            service_name=service_name,
-            expires_at=expires_at,
-        )
-
-        return Response({
-            "service_name": api_key.service_name,
-            "public_key": public_key,
-            "private_key": private_key,
-        }, status=status.HTTP_201_CREATED)
-
-class CountryCodeAPI(ListAPIView):
-    """ API list all active country codes to extract validate nationality before national id. """
-    serializer_class = CountryCodeSerializer
-    queryset = CountryCode.objects.all()
 
 
 class NationalIDAPI(APIView):
