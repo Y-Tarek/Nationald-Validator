@@ -74,4 +74,4 @@ class ServiceTransactionAPI(ListAPIView):
     def get_queryset(self):
         return self.queryset.filter(
             service = self.request.service
-        ).order_by('-id')
+        ).select_related('service').order_by('-id')
